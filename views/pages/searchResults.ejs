@@ -1,0 +1,38 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+<%- include ('../partials/message') %>
+
+    <div class="container justify-content-center" style="padding-top: 1%; text-align: center;">
+            <% if(strDrink !== null && strDrinkThumb !== null && strAlcoholic !== null && strGlass !== null && strInstructions !== null){ %>
+                <h1><%=strDrink%></h1>
+                    
+                <div class="row pt-2 h-50">
+                    <div class="col">
+                        <img src= "<%= strDrinkThumb %>" class="img-thumbnail" alt="Image of your drink" >
+                        
+                    </div>
+                    <div class="col">
+                        <div class="row pb-4 px-2">
+                            <div class="col">
+                                <h5> <%=strAlcoholic%></h5>
+                            </div>
+                        </div>
+                        <div class="row py-4 px-2">
+                            <div class="col">
+                                <h5>Glass Type: <%= strGlass%></h5>
+                            </div>
+                        </div>
+                        <div class="row py-4 px-2">
+                            <div class="col">
+                                <h5>Instructions: <%= strInstructions%></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <h1>We are SOrry, but the Link is unavailable for <%=strDrink%>s</h1>
+            <% } %>
+        </div> 
+    </div>
+
+<%- include ('../partials/footer') %>

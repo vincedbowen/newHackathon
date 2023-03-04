@@ -1,0 +1,39 @@
+body {
+    background-color: #B39B84;
+}
+.navbar-brand{
+    color: white;
+}
+.navbar-brand:hover{
+    color: #B39B84;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+
+}
+.footer a{
+    text-decoration: none;
+    color: black;
+}
+
+.footer a:hover{
+    text-decoration: underline;
+}
+
+.main{
+    overflow:visible; 
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    padding-bottom: 220px;
+    font-family: "Playfair Display", serif;
+}

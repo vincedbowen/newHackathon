@@ -40,21 +40,22 @@ app.post("/searchForDrink", async (req, res) =>{
       ];
 
       const requests = urls.map((url) => axios.get(url));
+      var sendarray = [];
 
-      axios.all(requests).then((responses) => {
+      await axios.all(requests).then((responses) => {
         responses.forEach((resp) => {
           let msg = {
             server: resp.headers.server,
             status: resp.status,
             fields: Object.keys(resp.data).toString(),
           };
-          console.info(resp.config.url);
-          console.table(msg);
-          console.log(msg);
           console.log(resp.data);
+          sendarray.push(resp.data.results[0])
+          sendarray.push(resp.data.results[1])
         });
       });
-
+      console.log("bruh");
+      console.log(sendarray);
 });
 
 app.get("/aboutMe", (req, res) =>{

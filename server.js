@@ -28,40 +28,34 @@ app.get("/main", (req, res) =>{
     res.render("pages/main");
 });
 
-async function generateURL(req){
-    const cocktailName = req.body.cocktail;
-    var myURL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + cocktailName;
-    console.log(myURL);
-    return myURL;
-}
-
 // main axios call
 app.post("/searchForDrink", async (req, res) =>{
-    const formattedURL = await generateURL(req);
-    var retDrink;
-    return await axios({
-        // url for cocktail DB
-        url: formattedURL,
-        method:'GET',
-        dataType:'json',
-        headers: {
-            'Accept-Encoding': 'application/json'
-        }
-    })
-    .then(results => {
-        // verifies developer expects these results
-        console.log("Successful call to Cocktail DB");
-        // return only the first as directed in the instructions 
-        retDrink = results.data.drinks[0];
-        res.render("pages/searchResults", retDrink);
-    })
-    .catch(error => {
-        console.log("Failed to call Cocktail DB");
-        res.render("pages/main", {
-            message: "We are sorry, but an error in calling the Cocktail DB has occured! Error: " + error.message + ". Please enter a valid cocktail!" ,
-            error: true
+    var data = req.body.product;
+
+    let urls = [
+        "https://data.unwrangle.com/api/getter?platform=amazon_search&search=" + data + "&api_key=a00652c2d93f5b8ab5fd50674e849fcd13ba55ee",
+        "https://data.unwrangle.com/api/getter?platform=bestbuy_search&search=" + data + "&api_key=a00652c2d93f5b8ab5fd50674e849fcd13ba55ee",
+        "https://data.unwrangle.com/api/getter?platform=costco_search&search=" + data + "&api_key=a00652c2d93f5b8ab5fd50674e849fcd13ba55ee",
+        "https://data.unwrangle.com/api/getter?platform=samsclub_search&search=" + data + "&api_key=a00652c2d93f5b8ab5fd50674e849fcd13ba55ee"
+      ];
+
+      const requests = urls.map((url) => axios.get(url));
+      var sendarray = [];
+
+      await axios.all(requests).then((responses) => {
+        responses.forEach((resp) => {
+          let msg = {
+            server: resp.headers.server,
+            status: resp.status,
+            fields: Object.keys(resp.data).toString(),
+          };
+          console.log(resp.data);
+          sendarray.push(resp.data.results[0])
+          sendarray.push(resp.data.results[1])
         });
-    });
+      });
+      console.log("bruh");
+      console.log(sendarray);
 });
 
 app.get("/aboutMe", (req, res) =>{
